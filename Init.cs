@@ -6,7 +6,7 @@ using System.Windows.Forms;
 
 namespace ImageViewerApp
 {
-    static class Program
+    static class Init
     {
         /// <summary>
         /// The main entry point for the application.
@@ -16,7 +16,7 @@ namespace ImageViewerApp
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Form1());
+            Application.Run(new MainViewerFrm());
         }
     }
 }
