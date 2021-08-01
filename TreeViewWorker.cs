@@ -37,7 +37,7 @@ namespace ImageViewerApp
             foreach (DirectoryInfo subDir in subDirs)
             {
                 aNode = new TreeNode(subDir.Name, 0, 0);
-                aNode.Tag = subDir;
+                aNode.Tag = subDir.FullName;
                 aNode.ImageKey = "folder";
                 subSubDirs = subDir.GetDirectories();
 
@@ -59,6 +59,7 @@ namespace ImageViewerApp
                 FileInfo fi = new FileInfo(file);
                 TreeNode tds = td.Nodes.Add(fi.Name);
                 tds.Tag = fi.FullName;
+                tds.ImageKey = "file";
                 tds.StateImageIndex = 1;
 
             }

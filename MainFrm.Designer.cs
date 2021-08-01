@@ -36,12 +36,12 @@ namespace ImageViewerApp
             this.lblSelectDir = new System.Windows.Forms.Label();
             this.btnRootDirSelect = new System.Windows.Forms.Button();
             this.dlgRootSelect = new System.Windows.Forms.FolderBrowserDialog();
-            this.pnlViewer = new System.Windows.Forms.Panel();
             this.pbViewer = new System.Windows.Forms.PictureBox();
+            this.pnlViewer = new System.Windows.Forms.Panel();
             ((System.ComponentModel.ISupportInitialize)(this.rootDirWatcher)).BeginInit();
             this.pnlFolderSelect.SuspendLayout();
-            this.pnlViewer.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbViewer)).BeginInit();
+            this.pnlViewer.SuspendLayout();
             this.SuspendLayout();
             // 
             // treeGeneral
@@ -50,8 +50,9 @@ namespace ImageViewerApp
             | System.Windows.Forms.AnchorStyles.Left)));
             this.treeGeneral.Location = new System.Drawing.Point(12, 53);
             this.treeGeneral.Name = "treeGeneral";
-            this.treeGeneral.Size = new System.Drawing.Size(176, 381);
+            this.treeGeneral.Size = new System.Drawing.Size(176, 385);
             this.treeGeneral.TabIndex = 2;
+            this.treeGeneral.NodeMouseClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.treeGeneral_NodeMouseClick);
             // 
             // rootDirWatcher
             // 
@@ -67,12 +68,13 @@ namespace ImageViewerApp
             // 
             this.pnlFolderSelect.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.pnlFolderSelect.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.pnlFolderSelect.Controls.Add(this.tbRootPath);
             this.pnlFolderSelect.Controls.Add(this.lblSelectDir);
             this.pnlFolderSelect.Controls.Add(this.btnRootDirSelect);
             this.pnlFolderSelect.Location = new System.Drawing.Point(12, 12);
             this.pnlFolderSelect.Name = "pnlFolderSelect";
-            this.pnlFolderSelect.Size = new System.Drawing.Size(774, 35);
+            this.pnlFolderSelect.Size = new System.Drawing.Size(775, 35);
             this.pnlFolderSelect.TabIndex = 3;
             // 
             // tbRootPath
@@ -82,7 +84,7 @@ namespace ImageViewerApp
             this.tbRootPath.Location = new System.Drawing.Point(92, 9);
             this.tbRootPath.Name = "tbRootPath";
             this.tbRootPath.ReadOnly = true;
-            this.tbRootPath.Size = new System.Drawing.Size(639, 20);
+            this.tbRootPath.Size = new System.Drawing.Size(638, 20);
             this.tbRootPath.TabIndex = 2;
             this.tbRootPath.TextChanged += new System.EventHandler(this.tbRootPath_TextChanged);
             // 
@@ -98,7 +100,7 @@ namespace ImageViewerApp
             // btnRootDirSelect
             // 
             this.btnRootDirSelect.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnRootDirSelect.Location = new System.Drawing.Point(737, 9);
+            this.btnRootDirSelect.Location = new System.Drawing.Point(736, 9);
             this.btnRootDirSelect.Name = "btnRootDirSelect";
             this.btnRootDirSelect.Size = new System.Drawing.Size(34, 20);
             this.btnRootDirSelect.TabIndex = 0;
@@ -106,22 +108,27 @@ namespace ImageViewerApp
             this.btnRootDirSelect.UseVisualStyleBackColor = true;
             this.btnRootDirSelect.Click += new System.EventHandler(this.btnRootDirSelect_Click);
             // 
+            // pbViewer
+            // 
+            this.pbViewer.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.pbViewer.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pbViewer.Location = new System.Drawing.Point(0, 0);
+            this.pbViewer.Name = "pbViewer";
+            this.pbViewer.Size = new System.Drawing.Size(592, 384);
+            this.pbViewer.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
+            this.pbViewer.TabIndex = 0;
+            this.pbViewer.TabStop = false;
+            // 
             // pnlViewer
             // 
+            this.pnlViewer.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.pnlViewer.Controls.Add(this.pbViewer);
             this.pnlViewer.Location = new System.Drawing.Point(195, 54);
             this.pnlViewer.Name = "pnlViewer";
             this.pnlViewer.Size = new System.Drawing.Size(592, 384);
             this.pnlViewer.TabIndex = 4;
-            // 
-            // pbViewer
-            // 
-            this.pbViewer.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pbViewer.Location = new System.Drawing.Point(0, 0);
-            this.pbViewer.Name = "pbViewer";
-            this.pbViewer.Size = new System.Drawing.Size(592, 384);
-            this.pbViewer.TabIndex = 0;
-            this.pbViewer.TabStop = false;
             // 
             // MainViewerFrm
             // 
@@ -136,11 +143,13 @@ namespace ImageViewerApp
             this.ShowIcon = false;
             this.Text = "Image viewer ";
             this.Load += new System.EventHandler(this.MainViewerFrm_Load);
+            this.ResizeEnd += new System.EventHandler(this.MainViewerFrm_ResizeEnd);
             ((System.ComponentModel.ISupportInitialize)(this.rootDirWatcher)).EndInit();
             this.pnlFolderSelect.ResumeLayout(false);
             this.pnlFolderSelect.PerformLayout();
-            this.pnlViewer.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pbViewer)).EndInit();
+            this.pnlViewer.ResumeLayout(false);
+            this.pnlViewer.PerformLayout();
             this.ResumeLayout(false);
 
         }

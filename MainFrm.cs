@@ -24,7 +24,7 @@ namespace ImageViewerApp
             rootDirWatcher.Path = initPath;
 
             appState.rootFolderPath = initPath;
-            appState.extFilter = ConfigurationManager.AppSettings["viewExtent"];
+            appState.extFilter = Properties.Resources.fileExtentions;
 
             TreeViewWorker.PopulateTreeView(treeGeneral, appState.rootFolderPath, appState.extFilter);
         }
@@ -44,6 +44,41 @@ namespace ImageViewerApp
             {
                 appState.rootFolderPath = tbRootPath.Text;
                 TreeViewWorker.PopulateTreeView(treeGeneral, appState.rootFolderPath, appState.extFilter);
+                pbViewer.Image = null;
+            }
+        }
+
+        private void treeGeneral_NodeMouseClick(object sender, TreeNodeMouseClickEventArgs e)
+        {
+            if (pbViewer.Image != null)
+            {
+                pbViewer.Image.Dispose();
+            }
+
+            string pathToDirOrFile = e.Node.Tag.ToString();
+            FileAttributes attr = File.GetAttributes(pathToDirOrFile);
+            string filePth;
+
+            if (!attr.HasFlag(FileAttributes.Directory))
+            {
+                filePth = e.Node.Tag.ToString();
+
+                try
+                {
+                    Image img = Image.FromFile(filePth);
+                    pbViewer.Image = img;
+                    pbViewer.SizeMode = PictureBoxSizeMode.Zoom;
+
+                }
+                catch (OutOfMemoryException)
+                {
+                    MessageBox.Show($"File: {filePth} - not valid for display!","File read error");
+                }
+
+            }
+            else
+            {
+                pbViewer.Image = null;
             }
         }
 
@@ -57,5 +92,9 @@ namespace ImageViewerApp
            TreeViewWorker.PopulateTreeView(treeGeneral, appState.rootFolderPath, appState.extFilter);
         }
 
+        private void MainViewerFrm_ResizeEnd(object sender, EventArgs e)
+        {
+            pbViewer.Refresh();
+        }
     }
 }
