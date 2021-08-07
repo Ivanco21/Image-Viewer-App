@@ -69,5 +69,6 @@ namespace ImageViewerApp
         {
             return filters.Split('|').SelectMany(filter => System.IO.Directory.GetFiles(sourceFolder, filter, searchOption)).ToArray();
         }
+
     }
 }

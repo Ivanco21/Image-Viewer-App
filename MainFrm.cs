@@ -26,7 +26,14 @@ namespace ImageViewerApp
             appState.rootFolderPath = initPath;
             appState.extFilter = Properties.Resources.fileExtentions;
 
-            TreeViewWorker.PopulateTreeView(treeGeneral, appState.rootFolderPath, appState.extFilter);
+            if (AcessChecker.CheckAccessToFolders(appState.rootFolderPath))
+            {
+                TreeViewWorker.PopulateTreeView(treeGeneral, appState.rootFolderPath, appState.extFilter);
+            }
+            else
+            {
+                SetNullInitState(appState.rootFolderPath);
+            }
         }
 
         private void btnRootDirSelect_Click(object sender, EventArgs e)
@@ -43,12 +50,20 @@ namespace ImageViewerApp
             if (appState.rootFolderPath != null )
             {
                 appState.rootFolderPath = tbRootPath.Text;
-                TreeViewWorker.PopulateTreeView(treeGeneral, appState.rootFolderPath, appState.extFilter);
-                pbViewer.Image = null;
+
+                if (AcessChecker.CheckAccessToFolders(appState.rootFolderPath))
+                {
+                    TreeViewWorker.PopulateTreeView(treeGeneral, appState.rootFolderPath, appState.extFilter);
+                    pbViewer.Image = null;
+                }
+                else
+                {
+                    SetNullInitState(appState.rootFolderPath);
+                }
             }
         }
 
-        private void treeGeneral_NodeMouseClick(object sender, TreeNodeMouseClickEventArgs e)
+        private void treeGeneral_AfterSelect(object sender, TreeViewEventArgs e)
         {
             if (pbViewer.Image != null)
             {
@@ -72,7 +87,7 @@ namespace ImageViewerApp
                 }
                 catch (OutOfMemoryException)
                 {
-                    MessageBox.Show($"File: {filePth} - not valid for display!","File read error");
+                    MessageBox.Show($"File: {filePth} - not valid for display!", "File read error");
                 }
 
             }
@@ -84,17 +99,39 @@ namespace ImageViewerApp
 
         private void rootDirWatcher_Changed(object sender, FileSystemEventArgs e)
         {
-           TreeViewWorker.PopulateTreeView(treeGeneral, appState.rootFolderPath, appState.extFilter);
+            if (AcessChecker.CheckAccessToFolders(appState.rootFolderPath))
+            {
+                TreeViewWorker.PopulateTreeView(treeGeneral, appState.rootFolderPath, appState.extFilter);
+            }
+            else
+            {
+                SetNullInitState(appState.rootFolderPath);
+            }
         }
 
         private void rootDirWatcher_Renamed(object sender, RenamedEventArgs e)
         {
-           TreeViewWorker.PopulateTreeView(treeGeneral, appState.rootFolderPath, appState.extFilter);
+            if (AcessChecker.CheckAccessToFolders(appState.rootFolderPath))
+            {
+                TreeViewWorker.PopulateTreeView(treeGeneral, appState.rootFolderPath, appState.extFilter);
+            }
+            else
+            {
+                SetNullInitState(appState.rootFolderPath);
+            }
         }
 
         private void MainViewerFrm_ResizeEnd(object sender, EventArgs e)
         {
             pbViewer.Refresh();
+        }
+
+        private void SetNullInitState(string pth)
+        {
+            treeGeneral.Nodes.Clear();
+            pbViewer.Image = null;
+            MessageBox.Show($"Acсess denied for one or some folders on folder path - {pth} {Environment.NewLine} " +
+                            $"Change current folder for correct work!", "Acсess error");
         }
     }
 }

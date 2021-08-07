@@ -52,7 +52,7 @@ namespace ImageViewerApp
             this.treeGeneral.Name = "treeGeneral";
             this.treeGeneral.Size = new System.Drawing.Size(176, 385);
             this.treeGeneral.TabIndex = 2;
-            this.treeGeneral.NodeMouseClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.treeGeneral_NodeMouseClick);
+            this.treeGeneral.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeGeneral_AfterSelect);
             // 
             // rootDirWatcher
             // 

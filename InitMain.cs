@@ -6,10 +6,11 @@ using System.Windows.Forms;
 
 namespace ImageViewerApp
 {
-    static class Init
+    static class InitMain
     {
         /// <summary>
-        /// The main entry point for the application.
+        /// Simple image viewer
+        /// This viewer works for all images in folder and subfolders
         /// </summary>
         [STAThread]
         static void Main()
